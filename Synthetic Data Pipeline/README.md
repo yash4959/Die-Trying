@@ -60,6 +60,8 @@ Contains paired images and labels for debugging and manual inspection.
     ├── Clean/
     ... (All Generator Classes)
 
+---
+
 ### 2. Final Training Set (`Final_Dataset`)
 The `Build_Final_Dataset.py` script automatically balances classes and splits data using a **70% / 20% / 10%** ratio.
 
@@ -135,5 +137,6 @@ To generate a full dataset from scratch:
 * **Balance:** We generate 2,500 images per class, solving the "Rare Defect" problem.
 
 * **Edge-Ready:** Data is specifically tuned (**224x224 grayscale**) for efficient inference on embedded NXP targets.
+
 
 
