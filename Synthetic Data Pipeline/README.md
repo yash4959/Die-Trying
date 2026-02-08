@@ -73,6 +73,7 @@ The `Build_Final_Dataset.py` script automatically balances classes and splits da
     * **Validation (20%):** For hyperparameter tuning and early stopping.
     * **Test (10%):** Held-out set for final NXP board performance benchmarks.
 
+```text
     Final_Dataset/
     ├── Train/
     │   ├── Bridge/
@@ -87,6 +88,7 @@ The `Build_Final_Dataset.py` script automatically balances classes and splits da
     │   └── (Same 8 classes)
     └── Test/
         └── (Same 8 classes)
+```
 
 ---
 
@@ -139,6 +141,7 @@ To generate a full dataset from scratch:
 * **Balance:** We generate 2,500 images per class, solving the "Rare Defect" problem.
 
 * **Edge-Ready:** Data is specifically tuned (**224x224 grayscale**) for efficient inference on embedded NXP targets.
+
 
 
 
