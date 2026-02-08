@@ -60,9 +60,10 @@ Contains paired images and labels for debugging and manual inspection.
     ├── Clean/
     ... (All Generator Classes)
 
-### 2. Final Training Set (`Final_Dataset_v2`)
+### 2. Final Training Set (`Final_Dataset`)
 The `Build_Final_Dataset.py` script automatically balances classes and splits data using a **70% / 20% / 10%** ratio.
 
+* **Link to the dataset:** https://drive.google.com/file/d/1aESAhJMB3ur3kpgqoUetGvQf6l2wuAiW/view?usp=drive_link
 * **Total Images:** 22.5k+
 * **Resolution:** 224x224 (Grayscale)
 * **Split Strategy:**
@@ -70,7 +71,7 @@ The `Build_Final_Dataset.py` script automatically balances classes and splits da
     * **Validation (20%):** For hyperparameter tuning and early stopping.
     * **Test (10%):** Held-out set for final NXP board performance benchmarks.
 
-    Final_Dataset_v2/
+    Final_Dataset/
     ├── Train/
     │   ├── Bridge/
     │   ├── Clean/
@@ -84,6 +85,21 @@ The `Build_Final_Dataset.py` script automatically balances classes and splits da
     │   └── (Same 8 classes)
     └── Test/
         └── (Same 8 classes)
+
+## 🔬 Real-World Validation Set (`Real_Dataset`)
+
+To ensure our synthetic pipeline generalizes to actual factory conditions, we curated a specialized **Real_Dataset** used exclusively for final calibration and out-of-distribution testing.
+
+### 📊 Dataset Composition
+* **Link to the dataset:** https://drive.google.com/file/d/14djOtTxtCsFTsXlKKSK-zw37H1nIHyz9/view?usp=drive_link
+* **Total Samples:** 240 high-resolution captures.
+* **Domain Authentic Data:** Includes **~90 raw SEM captures** from real semiconductor wafers, providing the ultimate benchmark for model robustness.
+* **Purpose:** This set acts as the "Ground Truth" for domain adaptation. While the model trains on 22.5k synthetic images, its deployment readiness is measured by its ability to classify these real-world variations.
+
+### 🧪 Sim-to-Real Performance Gap
+Initial testing revealed that models trained purely on synthetic data struggled with real-world sensor noise. By using this **Real_Dataset** as a buffer during Phase 2 Fine-Tuning, we achieved:
+* **Synthetic Test Accuracy:** 95.67%
+* **Real-World Defect Detection:** **92%** (Binary Defect vs. Clean classification on the NXP board).
 
 ---
 
@@ -119,4 +135,5 @@ To generate a full dataset from scratch:
 * **Balance:** We generate 2,500 images per class, solving the "Rare Defect" problem.
 
 * **Edge-Ready:** Data is specifically tuned (**224x224 grayscale**) for efficient inference on embedded NXP targets.
+
 
