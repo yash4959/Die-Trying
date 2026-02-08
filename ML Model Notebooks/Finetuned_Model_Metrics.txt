@@ -1,0 +1,17 @@
+Model: fine_tuned_model.tflite (Fixed Labels)
+Accuracy: 81.86%
+
+              precision    recall  f1-score   support
+
+      Bridge       0.83      0.81      0.82       569
+         CMP       0.75      0.90      0.82       638
+       Clean       0.70      0.94      0.80       309
+       Crack       0.97      0.84      0.90       592
+         LER       0.97      0.50      0.65       557
+        Open       0.64      0.93      0.76       561
+       Other       0.91      0.87      0.89       630
+         Via       0.97      0.81      0.88       577
+
+    accuracy                           0.82      4433
+   macro avg       0.84      0.82      0.81      4433
+weighted avg       0.85      0.82      0.82      4433

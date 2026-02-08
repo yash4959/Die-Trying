@@ -1,0 +1,17 @@
+Model: best_model_hardminer.keras
+Accuracy: 95.67%
+
+              precision    recall  f1-score   support
+
+      Bridge       0.99      0.97      0.98       569
+         CMP       0.86      0.97      0.91       638
+       Clean       0.96      0.96      0.96       309
+       Crack       0.99      0.95      0.97       592
+         LER       0.99      0.97      0.98       557
+        Open       0.95      0.98      0.96       561
+       Other       0.96      0.95      0.96       630
+         Via       0.99      0.92      0.95       577
+
+    accuracy                           0.96      4433
+   macro avg       0.96      0.96      0.96      4433
+weighted avg       0.96      0.96      0.96      4433
