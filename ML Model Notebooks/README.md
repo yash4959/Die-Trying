@@ -95,6 +95,7 @@ The baseline model achieves near-perfect classification on the synthetic test se
 
 
 ![Baseline_Model_Confusion_Matrix](./Baseline_Model_Confusion_Matrix.jpeg)
+
 ---
 
 ## 🔧 Phase 2: Real-World Fine-Tuning (Edge Calibration)
@@ -148,4 +149,5 @@ The classification report below (81.86% accuracy) is generated against the *full
     # 2. Run Fine-Tuning (Generates weighted .tflite for board)
 
     python fine_tune_realworld.py
+
 
