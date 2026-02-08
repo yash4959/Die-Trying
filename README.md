@@ -50,7 +50,7 @@ We utilize a highly optimized **MobileNetV2 (0.75α)** architecture tailored for
 
 This repository is organized into the modular components of our pipeline:
 
-### 🏭 [`/data_pipeline`](./Synthetic Data Pipeline)
+### 🏭 [`/data_pipeline`](./Synthetic\ Data\ Pipeline)
 **The Physics-Aware Synthetic Data Engine.**
 * Scripts for generating 8 classes of semiconductor defects (Bridge, Open, CMP, etc.).
 * Domain adaptation logic (SEM noise, charging effects, focus blur).
@@ -91,4 +91,5 @@ This repository is organized into the modular components of our pipeline:
 
 
 *Submitted for the IESA DeepTech Hackathon 2026.*
+
 
