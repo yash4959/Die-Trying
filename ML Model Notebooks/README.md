@@ -11,7 +11,7 @@
 | Model Version | Format | Precision (Weighted) | Accuracy (Test Set) | Size | Use Case |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Baseline** | `.onnx` / `.keras` | **0.96** | **95.67%** | 5.0 MB | Phase 1 Submission |
-| **Edge Ready** | `.tflite` | **0.85** | **81.86%*** | **1.7 MB** | NXP Board Deployment |
+| **Edge Ready** | `.tflite` | **0.85** | **81.86%** | **1.7 MB** | NXP Board Deployment |
 
 > ***Note on Fine-Tuned Accuracy:** The 81.86% metric reflects performance on the *labeled simulated validation set*. However, in real-world binary tests (Defect vs. Clean) on the NXP board, the fine-tuned model achieved a **92% detection rate**, demonstrating robust domain adaptation despite the synthetic-to-real gap.
 
@@ -149,5 +149,6 @@ The classification report below (81.86% accuracy) is generated against the *full
     # 2. Run Fine-Tuning (Generates weighted .tflite for board)
 
     python fine_tune_realworld.py
+
 
 
