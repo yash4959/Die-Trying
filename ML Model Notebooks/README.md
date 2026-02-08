@@ -129,6 +129,7 @@ The classification report below (81.86% accuracy) is generated against the *full
              Via       0.97      0.81      0.88       577
 
 
+![Finetuned_Model_Confusion_Matrix](./Finetuned_Model_Confusion_Matrix.jpeg)
 
 ---
 
@@ -147,3 +148,4 @@ The classification report below (81.86% accuracy) is generated against the *full
     # 2. Run Fine-Tuning (Generates weighted .tflite for board)
 
     python fine_tune_realworld.py
+
