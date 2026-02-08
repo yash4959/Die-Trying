@@ -1,3 +1,8 @@
+##Python file to run the .tflite finetuned model. If you want to run the .onnx baseline model, change the name in line 13 accordingly. 
+##Place the input images in a folder name "Input_Images" in the same folder where this python file and the model file is saved.
+##The output will be saved in a folder name "Inspection_Results". 
+#The images in subfolder: "PASS" have no defects, "FAIL" are defective, "FLAGGED" are images where the model has low confidence, and hence require some inspection. 
+
 import os
 import cv2
 import numpy as np
@@ -113,4 +118,5 @@ for filename in files:
     if is_success: buffer.tofile(out_path)
 
 print("-" * 70)
+
 print(f"✅ Done. Results sorted in '{OUTPUT_FOLDER}'")
