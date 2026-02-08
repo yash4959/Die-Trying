@@ -14,7 +14,7 @@ Unlike standard GANs (which **hallucinate artifacts**), our pipeline uses **proc
 
 Our engine operates in four distinct phases, moving from procedural geometry to domain-adapted realism.
 
-![Pipeline Flowchart](./Pipeline Flowchart.jpeg)
+![Pipeline Flowchart](./Pipeline_Flowchart.jpeg)
 
 ---
 
@@ -119,3 +119,4 @@ To generate a full dataset from scratch:
 * **Balance:** We generate 2,500 images per class, solving the "Rare Defect" problem.
 
 * **Edge-Ready:** Data is specifically tuned (**224x224 grayscale**) for efficient inference on embedded NXP targets.
+
