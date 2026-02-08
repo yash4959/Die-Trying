@@ -88,6 +88,8 @@ The `Build_Final_Dataset.py` script automatically balances classes and splits da
     └── Test/
         └── (Same 8 classes)
 
+---
+
 ## 🔬 Real-World Validation Set (`Real_Dataset`)
 
 To ensure our synthetic pipeline generalizes to actual factory conditions, we curated a specialized **Real_Dataset** used exclusively for final calibration and out-of-distribution testing.
@@ -137,6 +139,7 @@ To generate a full dataset from scratch:
 * **Balance:** We generate 2,500 images per class, solving the "Rare Defect" problem.
 
 * **Edge-Ready:** Data is specifically tuned (**224x224 grayscale**) for efficient inference on embedded NXP targets.
+
 
 
 
