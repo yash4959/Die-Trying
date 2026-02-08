@@ -50,13 +50,13 @@ We utilize a highly optimized **MobileNetV2 (0.75α)** architecture tailored for
 
 This repository is organized into the modular components of our pipeline:
 
-### 🏭 [`/data_pipeline`](./Synthetic_Data_Pipeline)
+### 🏭 [`/data_pipeline`](./Synthetic Data Pipeline)
 **The Physics-Aware Synthetic Data Engine.**
 * Scripts for generating 8 classes of semiconductor defects (Bridge, Open, CMP, etc.).
 * Domain adaptation logic (SEM noise, charging effects, focus blur).
 * *Key Tech: Python, OpenCV, NumPy.*
 
-### 🧠 [`/model_training`](./ML_Model_Notebooks)
+### 🧠 [`/model_training`](./ML Model Notebooks)
 **The Model Development & Quantization Workflow.**
 * Jupyter notebooks for Transfer Learning and Fine-Tuning.
 * Implementation of **Focal Loss** for hard-mining rare defects.
@@ -91,3 +91,4 @@ This repository is organized into the modular components of our pipeline:
 
 
 *Submitted for the IESA DeepTech Hackathon 2026.*
+
