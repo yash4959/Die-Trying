@@ -52,15 +52,15 @@ Visualizes the latent space collapse across the 8 categories. You can clearly se
 
 ### Binary Safety Matrix: The Mitigation
 ![Binary Safety Matrix](binary_safety_confusion_matrix.png)
-Proves the efficacy of our asymmetric risk gate. By collapsing the problem into a binary decision, we bypassed the multi-class confusion and successfully caught the vast majority of true defects.
+Proves the efficacy of our asymmetric risk gate. By collapsing the problem into a binary decision, we bypassed the multi-class confusion and caught the vast majority of true defects.
 
 ### Defect Capture Dynamics (The Autopsy)
 ![Defect Capture Dynamics](pitch_escape_autopsy.png)
-A histogram proving that the escaping defects were marginal edge-cases hugging the `0.125` threshold, not catastrophic high-confidence failures. We successfully crushed the "Clean" confidence of real anomalies down to near-zero.
+A histogram proving that the escaping defects were marginal edge-cases hugging the `0.125` threshold, not catastrophic high-confidence failures. We successfully crushed the "Clean" confidence of real anomalies down to near-zero while maintaining low 'False Clean' predictions.
 
 ### Threshold Optimization Curve
 ![Threshold Optimization Curve](pitch_threshold_curve.png)
-Maps the exact trade-off between Factory Safety (Defect Capture) and Edge Efficiency (Clean Throughput). This proves that `0.125` was not a guess, but the mathematical intersection optimizing the physical limits of the hardware.
+Maps the exact trade-off between Factory Safety (Defect Capture) and Edge Efficiency (Clean Throughput).
 
 ### Granular Entropy Profile
 ![Granular Entropy Profile](pitch_entropy_profile.png)
@@ -68,7 +68,7 @@ A violin plot mapping the Shannon Entropy (mathematical confusion) of the model.
 
 ### Model Integrity (TP vs FP)
 ![Model Integrity](pitch_tp_vs_fp_conf.png)
-Shows confidence inversion on texture classes (the model was more confident when wrong than right for CMP/Clean), directly justifying why we abandoned standard `argmax` routing.
+Shows confidence inversion on texture classes (the model was just as or more confident when wrong than right for CMP/Clean), directly justifying why we abandoned standard `argmax` routing.
 
 ## ⚡ Phase 3 Hardware Telemetry
 The script wraps the ONNX CPU runtime in a hardware profiler (`psutil` and `time.perf_counter`) to simulate Edge execution constraints targeting the NXP i.MX RT.
