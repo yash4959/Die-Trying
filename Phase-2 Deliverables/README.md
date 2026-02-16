@@ -6,12 +6,15 @@
 - [🚨 The 8-Class Metrics Autopsy](#-the-8-class-metrics-autopsy)
 - [📊 Matrices & Data Science Visuals](#-matrices--data-science-visuals)
 - [⚡ Phase 3 Hardware Telemetry](#-phase-3-hardware-telemetry)
+
 ---
+
 ## 📌 The Relabelling Strategy
 To mathematically align the physical Phase 2 test dataset with our model's trained latent space, we implemented strict relabelling protocols in the data pipeline:
 * **Particle to Other:** We remapped physical **particle** defects to the **Other** (Index 6) class. Particles are random surface debris.
 * **Via Isolation:** We explicitly forced **Via** to Index 7 to cleanly isolate it at the edge of our confusion matrices for specialized analysis.
 
+---
 
 ## ⚙️ The Code Logic & Architecture
 We optimized the inference pipeline strictly for bare-metal MCU deployment constraints (abandoning heavy, dynamic pre-processing for static edge heuristics).
@@ -25,6 +28,7 @@ Real-world optical noise on bare silicon blinded the 8-class feature extractor, 
 * If **Clean** drops below `0.125`, or **Other** spikes above `0.120`, the chip is immediately flagged as a Defect.
 This asymmetric thresholding successfully salvaged the deployment to an extent.
 
+---
 
 ## 🚨 The 8-Class Metrics Autopsy
 The physical factory noise floor resulted in a 29% global multi-class accuracy. However, dissecting the metrics reveals exactly how the model's architecture interacted with the physical constraints of the test set:
@@ -52,6 +56,8 @@ The physical factory noise floor resulted in a 29% global multi-class accuracy. 
 * **Crack:** With **0.65 Recall**, the model successfully hunts structural anomalies, though the noisy background increases false positives.
 * **CMP & Clean:** The heavy Sim2Real domain shift caused severe feature overlap here, confirming the necessity of our binary risk gate mitigation to catch defects hidden in the noise.
 
+---
+
 ## 📊 Matrices & Data Science Visuals
 To mathematically justify our architecture and the `0.125` threshold, the pipeline generates the following analytical deliverables:
 
@@ -78,6 +84,8 @@ A violin plot mapping the Shannon Entropy (mathematical confusion) of the model.
 ### Model Integrity (TP vs FP)
 ![Model Integrity](pitch_tp_vs_fp_conf.png)
 Shows confidence inversion on texture classes (the model was just as or more confident when wrong than right for CMP/Clean), directly justifying why we abandoned standard `argmax` routing.
+
+---
 
 ## ⚡ Phase 3 Hardware Telemetry
 The script wraps the ONNX CPU runtime in a hardware profiler (`psutil` and `time.perf_counter`) to simulate Edge execution constraints targeting the NXP i.MX RT.
