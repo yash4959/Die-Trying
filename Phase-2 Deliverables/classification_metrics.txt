@@ -1,0 +1,19 @@
+=======================================================
+PHASE 3 BARE-METAL COMPLIANT VERDICT
+STATIC MCU SCALING: MEAN=108.02, STD=42.94
+=======================================================
+
+              precision    recall  f1-score   support
+
+         Via       0.00      0.00      0.00        30
+      Bridge       0.36      0.50      0.42        32
+         CMP       0.17      0.13      0.15        30
+       Crack       0.38      0.65      0.48        31
+         LER       0.91      0.33      0.49        30
+        Open       0.21      0.50      0.29        30
+       Other       0.20      0.12      0.16        80
+       Clean       0.28      0.33      0.30        33
+
+    accuracy                           0.29       296
+   macro avg       0.31      0.32      0.29       296
+weighted avg       0.29      0.29      0.27       296
