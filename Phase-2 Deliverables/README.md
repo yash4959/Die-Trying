@@ -11,7 +11,7 @@
 
 ## 📌 The Relabelling Strategy
 To mathematically align the physical Phase 2 test dataset with our model's trained latent space, we implemented strict relabelling protocols in the data pipeline:
-* **Particle to Other:** We remapped physical **particle** defects to the **Other** (Index 6) class. Particles are random surface debris. This morphology aligns perfectly with the high-variance "garbage-can" distribution of the Other class, rather than the specific texture profile of Chemical Mechanical Polishing (CMP).
+* **Particle to Other:** We remapped physical **particle** defects to the **Other** (Index 6) class. Particles are random surface debris.
 * **Via Isolation:** We explicitly forced **Via** to Index 7 to cleanly isolate it at the edge of our confusion matrices for specialized analysis.
 
 ---
@@ -19,15 +19,14 @@ To mathematically align the physical Phase 2 test dataset with our model's train
 ## ⚙️ The Code Logic & Architecture
 We optimized the inference pipeline strictly for bare-metal MCU deployment constraints (targeting 512kB SRAM), abandoning heavy, dynamic pre-processing for static edge heuristics.
 
-**1. Static MCU Scaling**
-Instead of calculating dynamic image statistics per frame (which wastes critical MCU clock cycles), we hardcoded the global dataset parameters: `MEAN = 108.02`, `STD = 42.94`.
+**1. Static MCU Scaling (Zero-Overhead Normalization)**
+Neural networks strictly require normalized input tensors to maintain stable activations during inference. However, calculating the mean and standard deviation dynamically for every single incoming frame is computationally lethal for an MCU—it wastes critical clock cycles on basic pixel math. To ensure Phase-3 hardware compliance, we bypassed dynamic normalization entirely. Instead, we profiled the entire Phase 2 dataset offline and hardcoded the global statistics: `MEAN = 108.02`, `STD = 42.94`. This reduces a heavy per-frame mathematical operation into a lightning-fast, static scalar adjustment, ensuring our 5.2ms latency.
 
 **2. The Asymmetric Risk Gate**
 Real-world optical noise on bare silicon blinded the 8-class feature extractor, causing a Sim2Real domain shift. To mitigate this, we bypassed standard multi-class `argmax` routing and engineered a strict binary safety gate:
 * If the model's confidence in **Clean** is `>= 0.125`, AND the **Other** suspicion score is `< 0.120`, the chip passes.
 * If **Clean** drops below `0.125`, or **Other** spikes above `0.120`, the chip is immediately flagged as a Defect.
-This asymmetric thresholding successfully salvaged the deployment, shifting the model's focus from perfect categorization to strict industrial defect capture.
-
+This asymmetric thresholding successfully salvaged the deployment to an extent.
 ---
 
 ## 🚨 The 8-Class Metrics Autopsy
@@ -73,7 +72,7 @@ A histogram proving that the escaping defects were marginal edge-cases hugging t
 
 ### Threshold Optimization Curve
 ![Threshold Optimization Curve](pitch_threshold_curve.png)
-Maps the exact trade-off between Factory Safety (Defect Capture) and Edge Efficiency (Clean Throughput). This proves that `0.125` was not a guess, but the mathematical intersection optimizing the physical limits of the hardware.
+Maps the exact trade-off between Factory Safety (Defect Capture) and Edge Efficiency (Clean Throughput).
 
 ### Granular Entropy Profile
 ![Granular Entropy Profile](pitch_entropy_profile.png)
@@ -81,7 +80,7 @@ A violin plot mapping the Shannon Entropy (mathematical confusion) of the model.
 
 ### Model Integrity (TP vs FP)
 ![Model Integrity](pitch_tp_vs_fp_conf.png)
-Shows confidence inversion on texture classes (the model was more confident when wrong than right for CMP/Clean), directly justifying why we abandoned standard `argmax` routing.
+Shows confidence inversion on texture classes (the model was just as/more confident when wrong than right for CMP/Clean), directly justifying why we abandoned standard `argmax` routing.
 
 ---
 
@@ -92,3 +91,4 @@ The script wraps the ONNX CPU runtime in a hardware profiler (`psutil` and `time
 * **RAM Overhead: +11.86 MB**
 
 This is the peak dynamic memory spike during unoptimized float32 tensor execution. Once compiled to bare-metal C++ (e.g., TFLite Micro or X-CUBE-AI) and INT8 quantized, this footprint will shrink comfortably into standard MCU SRAM limits.
+
