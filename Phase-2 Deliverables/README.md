@@ -1,6 +1,6 @@
 # Industrial Edge AI: Semiconductor Defect Detection
 
-## 🚀 Project Overview & Deployment Reality
+## 🚀 Overview
 This repository subfolder contains the Phase 2 deliverables for our Semiconductor Defect Detection system. 
 
 We deployed our **finetuned Phase 1 model** (`Die-Trying_Finetuned_Model.onnx`) against a real-world, physical bare-silicon test dataset under strict MCU constraints (targeting the 512kB SRAM NXP i.MX RT). While the model excelled on synthetic data, physical factory conditions (optical noise, lighting gradients) caused a severe **domain shift**, crashing our multi-class accuracy to 29%. 
@@ -100,5 +100,6 @@ The script wraps the ONNX CPU runtime in a hardware profiler (`psutil` and `time
 * **RAM Overhead: +11.86 MB**
 
 This is the peak dynamic memory spike during unoptimized float32 tensor execution. Once compiled to bare-metal C++ (e.g., TFLite Micro or X-CUBE-AI) and INT8 quantized, this footprint will shrink comfortably into standard MCU SRAM limits.
+
 
 
