@@ -5,7 +5,7 @@
 - [⚙️ The Code Logic & Architecture](#️-the-code-logic--architecture)
 - [🚨 The 8-Class Metrics Autopsy](#-the-8-class-metrics-autopsy)
 - [📊 Matrices & Data Science Visuals](#-matrices--data-science-visuals)
-- [⚡ Phase 3 Hardware Telemetry](#-phase-3-hardware-telemetry)
+- [⚡ Hardware Telemetry Data Analysis](#-hardware-telemetry-data-analysis)
 
 ---
 
@@ -87,7 +87,7 @@ Shows confidence inversion on texture classes (the model was just as or more con
 
 ---
 
-## ⚡ Phase 3 Hardware Telemetry
+## ⚡ Hardware Telemetry Data Analysis
 The script wraps the ONNX CPU runtime in a hardware profiler (`psutil` and `time.perf_counter`) to simulate Edge execution constraints targeting the NXP i.MX RT.
 
 * **Average Latency: ~5.24 ms / image** Operating at ~190 FPS on a standard CPU thread, the inference math is highly optimized for real-time factory line speeds.
