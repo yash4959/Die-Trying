@@ -1,13 +1,20 @@
 # Industrial Edge AI: Semiconductor Defect Detection
 
-![Status](https://img.shields.io/badge/Status-Deployment_Ready-success)
-![Hardware](https://img.shields.io/badge/Target-NXP_i.MX_RT-blue)
-![Latency](https://img.shields.io/badge/Latency-5.2ms-orange)
+## 📑 Table of Contents
+- [📌 The Relabelling Strategy](#-the-relabelling-strategy)
+- [⚙️ The Code Logic & Architecture](#️-the-code-logic--architecture)
+- [🚨 The 8-Class Metrics Autopsy](#-the-8-class-metrics-autopsy)
+- [📊 Matrices & Data Science Visuals](#-matrices--data-science-visuals)
+- [⚡ Hardware Telemetry Analysis](#-hardware-telemetry-analysis)
+
+---
 
 ## 📌 The Relabelling Strategy
 To mathematically align the physical Phase 2 test dataset with our model's trained latent space, we implemented strict relabelling protocols in the data pipeline:
 * **Particle to Other:** We remapped physical **particle** defects to the **Other** (Index 6) class. Particles are random surface debris. This morphology aligns perfectly with the high-variance "garbage-can" distribution of the Other class, rather than the specific texture profile of Chemical Mechanical Polishing (CMP).
 * **Via Isolation:** We explicitly forced **Via** to Index 7 to cleanly isolate it at the edge of our confusion matrices for specialized analysis.
+
+---
 
 ## ⚙️ The Code Logic & Architecture
 We optimized the inference pipeline strictly for bare-metal MCU deployment constraints (targeting 512kB SRAM), abandoning heavy, dynamic pre-processing for static edge heuristics.
@@ -21,34 +28,33 @@ Real-world optical noise on bare silicon blinded the 8-class feature extractor, 
 * If **Clean** drops below `0.125`, or **Other** spikes above `0.120`, the chip is immediately flagged as a Defect.
 This asymmetric thresholding successfully salvaged the deployment, shifting the model's focus from perfect categorization to strict industrial defect capture.
 
+---
+
 ## 🚨 The 8-Class Metrics Autopsy
 The physical factory noise floor resulted in a 29% global multi-class accuracy. However, dissecting the metrics reveals exactly how the model's architecture interacted with the physical constraints of the test set:
 
-=======================================================
-PHASE 3 BARE-METAL COMPLIANT VERDICT
-STATIC MCU SCALING: MEAN=108.02, STD=42.94
-=======================================================
-              precision    recall  f1-score   support
-
-         Via       0.00      0.00      0.00        30
-      Bridge       0.36      0.50      0.42        32
-         CMP       0.17      0.13      0.15        30
-       Crack       0.38      0.65      0.48        31
-         LER       0.91      0.33      0.49        30
-        Open       0.21      0.50      0.29        30
-       Other       0.20      0.12      0.16        80
-       Clean       0.28      0.33      0.30        33
-
-    accuracy                           0.29       296
-   macro avg       0.31      0.32      0.29       296
-weighted avg       0.29      0.29      0.27       296
-=======================================================
+| Class / Metric | Precision | Recall | F1-Score | Support |
+| :--- | :--- | :--- | :--- | :--- |
+| **Via** | 0.00 | 0.00 | 0.00 | 30 |
+| **Bridge** | 0.36 | 0.50 | 0.42 | 32 |
+| **CMP** | 0.17 | 0.13 | 0.15 | 30 |
+| **Crack** | 0.38 | 0.65 | 0.48 | 31 |
+| **LER** | 0.91 | 0.33 | 0.49 | 30 |
+| **Open** | 0.21 | 0.50 | 0.29 | 30 |
+| **Other** | 0.20 | 0.12 | 0.16 | 80 |
+| **Clean** | 0.28 | 0.33 | 0.30 | 33 |
+| --- | --- | --- | --- | --- |
+| **Accuracy** | | | **0.29** | **296** |
+| **Macro Avg** | 0.31 | 0.32 | 0.29 | 296 |
+| **Weighted Avg** | 0.29 | 0.29 | 0.27 | 296 |
 
 **Metric Analysis:**
 * **The Via Anomaly (0.00 F1):** Our model was strictly trained on **top-down** SEM images of Vias to facilitate inline, non-destructive production analysis. Cross-sectional Via analysis physically requires breaking the chip. The 0.00 score here reflects a dataset domain mismatch (testing cross-sectional vs. training top-down), not a feature extraction failure. We intentionally optimized for non-destructive pipeline integration.
 * **LER (Line Edge Roughness):** With **0.91 Precision**, the model is highly accurate when it detects LER, but the optical noise floor hides the majority of the cases (0.33 Recall). 
 * **Crack:** With **0.65 Recall**, the model successfully hunts structural anomalies, though the noisy background increases false positives.
 * **CMP & Clean:** The heavy Sim2Real domain shift caused severe feature overlap here, confirming the necessity of our binary risk gate mitigation to catch defects hidden in the noise.
+
+---
 
 ## 📊 Matrices & Data Science Visuals
 To mathematically justify our architecture and the `0.125` threshold, the pipeline generates the following analytical deliverables:
@@ -77,9 +83,12 @@ A violin plot mapping the Shannon Entropy (mathematical confusion) of the model.
 ![Model Integrity](pitch_tp_vs_fp_conf.png)
 Shows confidence inversion on texture classes (the model was more confident when wrong than right for CMP/Clean), directly justifying why we abandoned standard `argmax` routing.
 
-## ⚡ Phase 3 Hardware Telemetry
+---
+
+## ⚡ Hardware Telemetry Analysis
 The script wraps the ONNX CPU runtime in a hardware profiler (`psutil` and `time.perf_counter`) to simulate Edge execution constraints targeting the NXP i.MX RT.
 
 * **Average Latency: ~5.24 ms / image** Operating at ~190 FPS on a standard CPU thread, the inference math is highly optimized for real-time factory line speeds.
 * **RAM Overhead: +11.86 MB**
+
 This is the peak dynamic memory spike during unoptimized float32 tensor execution. Once compiled to bare-metal C++ (e.g., TFLite Micro or X-CUBE-AI) and INT8 quantized, this footprint will shrink comfortably into standard MCU SRAM limits.
