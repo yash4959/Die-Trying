@@ -1,9 +1,11 @@
 # Industrial Edge AI: Semiconductor Defect Detection Phase-2
 
+
 ## 📌 The Relabelling Strategy
 To mathematically align the physical Phase 2 test dataset with our model's trained latent space, we implemented strict relabelling protocols in the data pipeline:
 * **Particle to Other:** We remapped physical **particle** defects to the **Other** (Index 6) class. Particles are random surface debris.
 * **Via Isolation:** We explicitly forced **Via** to Index 7 to cleanly isolate it at the edge of our confusion matrices for specialized analysis.
+
 
 ## ⚙️ The Code Logic & Architecture
 We optimized the inference pipeline strictly for bare-metal MCU deployment constraints (abandoning heavy, dynamic pre-processing for static edge heuristics).
@@ -16,6 +18,7 @@ Real-world optical noise on bare silicon blinded the 8-class feature extractor, 
 * If the model's confidence in **Clean** is `>= 0.125`, AND the **Other** suspicion score is `< 0.120`, the chip passes.
 * If **Clean** drops below `0.125`, or **Other** spikes above `0.120`, the chip is immediately flagged as a Defect.
 This asymmetric thresholding successfully salvaged the deployment to an extent.
+
 
 ## 🚨 The 8-Class Metrics Autopsy
 The physical factory noise floor resulted in a 29% global multi-class accuracy. However, dissecting the metrics reveals exactly how the model's architecture interacted with the physical constraints of the test set:
