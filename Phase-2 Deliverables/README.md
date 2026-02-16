@@ -20,25 +20,22 @@ This asymmetric thresholding successfully salvaged the deployment to an extent.
 ## 🚨 The 8-Class Metrics Autopsy
 The physical factory noise floor resulted in a 29% global multi-class accuracy. However, dissecting the metrics reveals exactly how the model's architecture interacted with the physical constraints of the test set:
 
-=======================================================
-PHASE 3 BARE-METAL COMPLIANT VERDICT
-STATIC MCU SCALING: MEAN=108.02, STD=42.94
-=======================================================
-              precision    recall  f1-score   support
 
-         Via       0.00      0.00      0.00        30
-      Bridge       0.36      0.50      0.42        32
-         CMP       0.17      0.13      0.15        30
-       Crack       0.38      0.65      0.48        31
-         LER       0.91      0.33      0.49        30
-        Open       0.21      0.50      0.29        30
-       Other       0.20      0.12      0.16        80
-       Clean       0.28      0.33      0.30        33
+| Class / Metric | Precision | Recall | F1-Score | Support |
+| :--- | :--- | :--- | :--- | :--- |
+| **Via** | 0.00 | 0.00 | 0.00 | 30 |
+| **Bridge** | 0.36 | 0.50 | 0.42 | 32 |
+| **CMP** | 0.17 | 0.13 | 0.15 | 30 |
+| **Crack** | 0.38 | 0.65 | 0.48 | 31 |
+| **LER** | 0.91 | 0.33 | 0.49 | 30 |
+| **Open** | 0.21 | 0.50 | 0.29 | 30 |
+| **Other** | 0.20 | 0.12 | 0.16 | 80 |
+| **Clean** | 0.28 | 0.33 | 0.30 | 33 |
+| --- | --- | --- | --- | --- |
+| **Accuracy** | | | **0.29** | **296** |
+| **Macro Avg** | 0.31 | 0.32 | 0.29 | 296 |
+| **Weighted Avg** | 0.29 | 0.29 | 0.27 | 296 |
 
-    accuracy                           0.29       296
-   macro avg       0.31      0.32      0.29       296
-weighted avg       0.29      0.29      0.27       296
-=======================================================
 
 **Metric Analysis:**
 * **The Via Anomaly (0.00 F1):** Our model was strictly trained on **top-down** SEM images of Vias to facilitate inline, non-destructive production analysis. Cross-sectional Via analysis physically requires breaking the chip. The 0.00 score here reflects a dataset domain mismatch (testing cross-sectional vs. training top-down), not a feature extraction failure. We intentionally optimized for non-destructive pipeline integration.
