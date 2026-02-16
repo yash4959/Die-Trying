@@ -1,6 +1,12 @@
 # Industrial Edge AI: Semiconductor Defect Detection Phase-2
 
-
+## 📑 Table of Contents
+- [📌 The Relabelling Strategy](#-the-relabelling-strategy)
+- [⚙️ The Code Logic & Architecture](#️-the-code-logic--architecture)
+- [🚨 The 8-Class Metrics Autopsy](#-the-8-class-metrics-autopsy)
+- [📊 Matrices & Data Science Visuals](#-matrices--data-science-visuals)
+- [⚡ Phase 3 Hardware Telemetry](#-phase-3-hardware-telemetry)
+---
 ## 📌 The Relabelling Strategy
 To mathematically align the physical Phase 2 test dataset with our model's trained latent space, we implemented strict relabelling protocols in the data pipeline:
 * **Particle to Other:** We remapped physical **particle** defects to the **Other** (Index 6) class. Particles are random surface debris.
