@@ -7,7 +7,7 @@ We deployed our **finetuned Phase 1 model** (`Die-Trying_Finetuned_Model.onnx`) 
 
 This README documents the hardware telemetry of that failure, and more importantly, how we abandoned standard `argmax` routing to engineer an **Asymmetric Binary Risk Gate**. By bypassing the model's mathematical confusion, this system architecture successfully captures **86.5% of all physical defects**.
 
-**⚠️Note :** The finetuned model is not finetuned on the test dataset. It was finetuned on a small hybrid dataset of real die defect images and our best, handpicked simulated images. It was committed to this repository a week ago (as can be verified by git history). The ppt submitted for Phase-1 did not contain the direct link to the finetuned dataset and its metrics (due to strict page limits), but they were committed to this repository alongside the baseline model (Again, can be verified by git history).
+**⚠️Note :** The finetuned model is not finetuned on the test dataset. It was finetuned on a small hybrid dataset of real die defect images and our best, handpicked simulated images during the phase 1. It was committed to this repository a week ago (as can be verified by git history). The ppt submitted for Phase-1 did not contain the direct link to the finetuned dataset and its metrics (due to strict page limits), but they were committed to this repository alongside the baseline model (Again, can be verified by git history).
 
 ---
 
@@ -102,6 +102,7 @@ The script wraps the ONNX CPU runtime in a hardware profiler (`psutil` and `time
 * **RAM Overhead: +11.86 MB**
 
 This is the peak dynamic memory spike during unoptimized float32 tensor execution. Once compiled to bare-metal C++ (e.g., TFLite Micro or X-CUBE-AI) and INT8 quantized, this footprint will shrink comfortably into standard MCU SRAM limits.
+
 
 
 
