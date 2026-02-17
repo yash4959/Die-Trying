@@ -5,7 +5,7 @@ This repository subfolder contains the Phase 2 deliverables for our Semiconducto
 
 We deployed our **finetuned Phase 1 model** (`Die-Trying_Finetuned_Model.onnx`) against a real-world, physical bare-silicon test dataset under strict MCU constraints (targeting the 512kB SRAM NXP i.MX RT). While the model excelled on synthetic data, physical factory conditions (optical noise, lighting gradients) caused a severe **domain shift**, crashing our multi-class accuracy to 29%. 
 
-This README documents the hardware telemetry of that failure, and more importantly, how we abandoned standard `argmax` routing to engineer an **Asymmetric Binary Risk Gate**. By bypassing the model's mathematical confusion, this system architecture successfully captures **89% of all physical defects**.
+This README documents the hardware telemetry of that failure, and more importantly, how we abandoned standard `argmax` routing to engineer an **Asymmetric Binary Risk Gate**. By bypassing the model's mathematical confusion, this system architecture successfully captures **86.5% of all physical defects**.
 
 ---
 
